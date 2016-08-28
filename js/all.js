@@ -1,5 +1,14 @@
 $.support.cors = true;
 $(document).ready(function() {
+
+  document.addEventListener("deviceready", function() {
+    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, function(){
+      alert("error requesting LocalFileSystem");
+    });
+
+  }, false);
+
   document.addEventListener("deviceready", onDeviceReady, false);
 });
 
@@ -12,14 +21,49 @@ function onDeviceReady() {
 
 function fail() {console.log("failed to get filesystem");}
 
-function gotFS(fileSystem) {
-    console.log("got filesystem: "+fileSystem.name); // displays "persistent"
-    window.rootFS = fileSystem.root;
+function gotFS(fs) {
+    console.log("got filesystem: "+fs.name); // displays "persistent"
+    window.rootFS = fs.root;
+    // Make sure you add the domain name to the Content-Security-Policy <meta> element.
+    var url = 'http://cordova.apache.org/static/img/cordova_bot.png';
+
+    fs.root.getFile('downloaded-image.png', { create: true, exclusive: false }, function (fileEntry) {
+        download(fileEntry, url);
+    }, onErrorCreateFile);
 }
+
+
+function download(fileEntry, uri) {
+
+    var fileTransfer = new FileTransfer();
+    var fileURL = fileEntry.toURL();
+
+    fileTransfer.download(
+        uri,
+        fileURL,
+        function (entry) {
+            alert("Successful download...");
+            alert("download complete: " + entry.toURL());
+            
+        },
+        function (error) {
+            alert("download error source " + error.source);
+            alert("download error target " + error.target);
+            alert("upload error code" + error.code);
+        },
+        null, // or, pass false
+        {
+            //headers: {
+            //    "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+            //}
+        }
+    );
+}
+
 
 function dirReady(entry) {window.appRootDir = entry;}
 
-$(document).on('click','.download_btn',function () {
+$(document).on('click','.download_btn22',function () {
     
     //var url = 'http://amisapp.ansarullah.co.uk/images/meeting_documents/Test Ortho.txt';
     var url = 'https://maps.googleapis.com/maps-api-v3/api/js/26/1/common.js';
@@ -34,46 +78,7 @@ $(document).on('click','.download_btn',function () {
 
     alert(fileName);
 
-  cordova.exec(
-    function(freeSpace) {
-      if((freeSpace/1024) > 10){
 
-        var fileTransfer = new FileTransfer();
-        var urls = encodeURI(url);
-        var filePath = window.rootFS.toURL() + fileName;
-        alert(urls);
-        alert(filePath);
-
-        fileTransfer.onprogress = function(result){
-          var percent =  result.loaded / result.total * 100;
-          percent = Math.round(percent);
-          //cordova.plugins.pDialog.setProgress(percent);
-        };
-        fileTransfer.download(urls,filePath,
-          function(entry) {
-            navigator.notification.alert('File saved into internal storage', null, 'Success', 'OK');
-            //cordova.plugins.pDialog.dismiss();  
-            disableBack = false;
-          },
-          function(error) {
-            disableBack = false;
-            //cordova.plugins.pDialog.dismiss();  
-           navigator.notification.alert("Cannot download.  No/bad internet connection?", null, 'Error', 'OK');
-          });
-
-      }else{
-        disableBack = false;
-        //cordova.plugins.pDialog.dismiss();  
-        navigator.notification.alert("Free up space in memory card and try again!", null, 'Alert', 'OK');
-      }
-    },
-    function() {
-      disableBack = false;
-      //cordova.plugins.pDialog.dismiss();  
-      navigator.notification.alert("Error checking filesystem", null, 'Error', 'OK');
-    },
-    "File", "getFreeDiskSpace", []
-  );
 });
 
 
