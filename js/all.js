@@ -16,11 +16,13 @@ function gotFS(fileSystem) {
 
 function download() {
 
-    var uri = 'http://cordova.apache.org/static/img/cordova_bot.png';
+    //var uri = 'http://cordova.apache.org/static/img/cordova_bot.png';
 
+    var uri = 'http://amisapp.ansarullah.co.uk/images/meeting_documents/Test Ortho.txt'
     var filePath = window.rootFS.toURL() + 'test1/' + uri.split('/').pop();
     alert("filePath: "+filePath);
     var fileTransfer = new FileTransfer();
+    uri = encodeURI(uri);
     fileTransfer.download(uri,filePath, function (entry) {
           alert("Successful download...");
           alert("download complete: " + entry.toURL());
