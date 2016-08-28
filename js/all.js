@@ -21,7 +21,8 @@ function dirReady(entry) {window.appRootDir = entry;}
 
 $(document).on('click','.download_btn',function () {
     
-    var url = encodeURI('http://amisapp.ansarullah.co.uk/images/meeting_documents/Test Ortho.txt');
+    var url = 'http://amisapp.ansarullah.co.uk/images/meeting_documents/Test Ortho.txt';
+    //https://maps.googleapis.com/maps-api-v3/api/js/26/1/common.js
     fileName = url.substr(url.lastIndexOf('/') + 1);
     /*cordova.plugins.pDialog.init({
           theme : 'HOLO_DARK',
@@ -38,11 +39,11 @@ $(document).on('click','.download_btn',function () {
       if((freeSpace/1024) > 10){
 
         var fileTransfer = new FileTransfer();
-        var urls = url;
+        var urls = encodeURI(url);
         var filePath = window.rootFS.toURL() + fileName;
         alert(urls);
         alert(filePath);
-        
+
         fileTransfer.onprogress = function(result){
           var percent =  result.loaded / result.total * 100;
           percent = Math.round(percent);
