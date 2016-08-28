@@ -19,9 +19,9 @@ function gotFS(fileSystem) {
     window.rootFS = fileSystem.root;
     fileSystem.root.getDirectory('test1', { create: true });
 
-    var filePath = fileSystem.root.fullPath + 'test1/' + uri.split('/').pop();
+    var filePath = fileSystem.root.toURL() + 'test1/' + uri.split('/').pop();
 
-    alert(window.rootFS.toURL()+" "+filePath);
+    alert(window.rootFS.toURL()+" --\n"+filePath);
 
     var fileTransfer = new FileTransfer();
     //var fileURL = window.rootFS.toURL()+"downloaded-image.png";
