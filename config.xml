@@ -4,7 +4,7 @@
     <description>Downloading Files using PhoneGap</description>
     <author email="er.gopiselvam@gmail.com" href="www.dreamguys.co.in">Gopi ST</author>
     <feature name="http://api.phonegap.com/1.0/network"/>
-    
+
     <preference name="phonegap-version" value="3.5.0" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="universal" />
@@ -25,6 +25,7 @@
     <gap:plugin name="org.apache.cordova.media" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
     <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.media" />
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="io.github.pwlin.cordova.plugins.pdialog"/>
     <access origin="*" />
