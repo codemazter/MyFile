@@ -3,6 +3,8 @@
     <name>MyFile</name>
     <description>Downloading Files using PhoneGap</description>
     <author email="er.gopiselvam@gmail.com" href="www.dreamguys.co.in">Gopi ST</author>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    
     <preference name="phonegap-version" value="3.5.0" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="universal" />
@@ -18,6 +20,7 @@
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
+    <plugin name="org.apache.cordova.network-information" source="pgb" />
     <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="org.apache.cordova.media" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
