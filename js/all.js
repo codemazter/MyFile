@@ -21,8 +21,8 @@ function dirReady(entry) {window.appRootDir = entry;}
 
 $(document).on('click','.download_btn',function () {
     
-    var url = 'http://amisapp.ansarullah.co.uk/images/meeting_documents/Test Ortho.txt';
-    //https://maps.googleapis.com/maps-api-v3/api/js/26/1/common.js
+    //var url = 'http://amisapp.ansarullah.co.uk/images/meeting_documents/Test Ortho.txt';
+    var url = 'https://maps.googleapis.com/maps-api-v3/api/js/26/1/common.js';
     fileName = url.substr(url.lastIndexOf('/') + 1);
     /*cordova.plugins.pDialog.init({
           theme : 'HOLO_DARK',
