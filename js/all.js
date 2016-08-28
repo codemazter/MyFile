@@ -23,13 +23,15 @@ $(document).on('click','.download_btn',function () {
     
     var url = encodeURI('http://amisapp.ansarullah.co.uk/images/meeting_documents/Test Ortho.txt');
     fileName = url.substr(url.lastIndexOf('/') + 1);
-    cordova.plugins.pDialog.init({
+    /*cordova.plugins.pDialog.init({
           theme : 'HOLO_DARK',
           progressStyle : 'SPINNER',
           cancelable : false,
           title : 'Please Wait...',
           message : 'Downloading ...'
-    });
+    });*/
+
+    alert(fileName);
 
   cordova.exec(
     function(freeSpace) {
@@ -38,33 +40,35 @@ $(document).on('click','.download_btn',function () {
         var fileTransfer = new FileTransfer();
         var urls = url;
         var filePath = window.rootFS.toURL() + fileName;
-
+        alert(urls);
+        alert(filePath);
+        
         fileTransfer.onprogress = function(result){
           var percent =  result.loaded / result.total * 100;
           percent = Math.round(percent);
-          cordova.plugins.pDialog.setProgress(percent);
+          //cordova.plugins.pDialog.setProgress(percent);
         };
         fileTransfer.download(urls,filePath,
           function(entry) {
             navigator.notification.alert('File saved into internal storage', null, 'Success', 'OK');
-            cordova.plugins.pDialog.dismiss();  
+            //cordova.plugins.pDialog.dismiss();  
             disableBack = false;
           },
           function(error) {
             disableBack = false;
-            cordova.plugins.pDialog.dismiss();  
-           navigator.notification.alert("Cannot download.  No/bad internet connection?", null, 'Ringtone', 'OK');
+            //cordova.plugins.pDialog.dismiss();  
+           navigator.notification.alert("Cannot download.  No/bad internet connection?", null, 'Error', 'OK');
           });
 
       }else{
         disableBack = false;
-        cordova.plugins.pDialog.dismiss();  
+        //cordova.plugins.pDialog.dismiss();  
         navigator.notification.alert("Free up space in memory card and try again!", null, 'Alert', 'OK');
       }
     },
     function() {
       disableBack = false;
-      cordova.plugins.pDialog.dismiss();  
+      //cordova.plugins.pDialog.dismiss();  
       navigator.notification.alert("Error checking filesystem", null, 'Error', 'OK');
     },
     "File", "getFreeDiskSpace", []
