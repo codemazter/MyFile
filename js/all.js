@@ -2,6 +2,8 @@ $.support.cors = true;
 $(document).ready(function() {
 
   document.addEventListener("deviceready", function() {
+
+    alert('deviceready';)
     window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, function(){
       alert("error requesting LocalFileSystem");
@@ -9,7 +11,7 @@ $(document).ready(function() {
 
   }, false);
 
-  document.addEventListener("deviceready", onDeviceReady, false);
+  //document.addEventListener("deviceready", onDeviceReady, false);
 });
 
 function onDeviceReady() {
