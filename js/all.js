@@ -14,27 +14,28 @@ $(document).ready(function(e) {
 });
 
 function gotFS(fileSystem) {
-   //alert('gotFS');
-    //console.log("got filesystem: "+fileSystem.name); // displays "persistent"
+
+  var uri = 'http://cordova.apache.org/static/img/cordova_bot.png';
     window.rootFS = fileSystem.root;
-    alert(window.rootFS.toURL());
+    fileSystem.root.getDirectory('test1', { create: true });
+
+    var filePath = fileSystem.root.fullPath + 'test1/' + uri.split('/').pop();
+
+    alert(window.rootFS.toURL()+" "+filePath);
 
     var fileTransfer = new FileTransfer();
-    var fileURL = window.rootFS.toURL()+"downloaded-image.png";
-    var uri = 'http://cordova.apache.org/static/img/cordova_bot.png';
+    //var fileURL = window.rootFS.toURL()+"downloaded-image.png";
+    
 
-    fileTransfer.download(
-        uri,
-        fileURL,
-        function (entry) {
-            alert("Successful download...");
-            alert("download complete: " + entry.toURL());
+    fileTransfer.download(uri,filePath, function (entry) {
+          alert("Successful download...");
+          alert("download complete: " + entry.toURL());
             
         },
         function (error) {
             alert("download error source " + error.source);
             alert("download error target " + error.target);
-            alert("upload error code" + error.code);
+            alert("download error code" + error.code);
         },
         null, // or, pass false
         {
